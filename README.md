@@ -1,5 +1,9 @@
 # NFL Pickem
 
+Using FiveThrityEight's ELO ratings for NFL game predictions.  Historical data can be 
+found 
+[here](https://github.com/fivethirtyeight/nfl-elo-game/blob/master/data/nfl_games.csv).
+
 ## Analyzing ELO forecasts
 
 Need to see how the actual vs. predicted probabilities change when considering
