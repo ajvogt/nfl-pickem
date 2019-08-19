@@ -2,7 +2,20 @@
 
 Using FiveThrityEight's ELO ratings for NFL game predictions.  Historical data can be 
 found 
-[here](https://github.com/fivethirtyeight/nfl-elo-game/blob/master/data/nfl_games.csv).
+[here](https://github.com/fivethirtyeight/nfl-elo-game/blob/master/data/nfl_games.csv).  
+An explanation of the model can be 
+[here](https://fivethirtyeight.com/methodology/how-our-nfl-predictions-work/).
+
+## To-Do
+- [ ] Analyze prediction accuracy for future games
+- [ ] Build API structure
+  - [ ] initialize by pulling data and creating table <br/>
+  have file name/location be an attribute.
+  - [ ] have method for calculating outcomes <br/>
+  have attributes for prior picks, number of weeks to cover and
+  and how many possible picks each week (or probability threshold)
+  to consider
+- [ ] Run analysis on historical outcomes for picking structure
 
 ## Analyzing ELO forecasts
 
