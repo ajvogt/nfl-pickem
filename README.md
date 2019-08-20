@@ -17,6 +17,16 @@ An explanation of the model can be
   to consider
 - [ ] Run analysis on historical outcomes for picking structure
 
+
+## Notes on Future Predictability
+By considering all week10+ regular season games from 2007 to 2018, if I estimate a
+team's probability of winning a match based on their current elo rating vs. ratings from
+weeks 1-7 prior, the log-loss of the prediction model is pretty stable.  That said, 
+the average probability change for all teams between the current rating and a previous 
+one is on the order of 0.1%.  There is either some stability in a lot of the ELO ratings 
+or the zero-sum nature of the rating system causes fluctuations up and down to balance. 
+That said, the RMSE was still on the order of 2%.
+
 ## Analyzing ELO forecasts
 
 Need to see how the actual vs. predicted probabilities change when considering
