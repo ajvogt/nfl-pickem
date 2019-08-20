@@ -25,7 +25,7 @@ weeks 1-7 prior, the log-loss of the prediction model is pretty stable.  That sa
 the average probability change for all teams between the current rating and a previous 
 one is on the order of 0.1%.  There is either some stability in a lot of the ELO ratings 
 or the zero-sum nature of the rating system causes fluctuations up and down to balance. 
-That said, the RMSE was still on the order of 2%.
+That said, the RMSE was still on the order of 1%.
 
 ## Analyzing ELO forecasts
 
