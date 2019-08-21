@@ -9,7 +9,7 @@ An explanation of the model can be
 ## To-Do
 - [ ] Analyze prediction accuracy for future games
 - [ ] Build API structure
-  - [ ] initialize by pulling data and creating table <br/>
+  - [x] initialize by pulling data and creating table <br/>
   have file name/location be an attribute.
   - [ ] have method for calculating outcomes <br/>
   have attributes for prior picks, number of weeks to cover and
