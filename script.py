@@ -1,3 +1,6 @@
+"""python script used for development
+"""
+
 import pandas as pd
 from nfl_pickem import Pickem
 
