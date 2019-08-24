@@ -15,6 +15,9 @@ prior_picks : list of str
 
 Returns
 -------
+teams : printed list
+    list of team acronyms in the current season
+
 picks : printed sequence of lists
     prints a sequency of lists forecasting from the current
     week to each of the number of weeks remaining in the
@@ -22,7 +25,18 @@ picks : printed sequence of lists
     five weeks).  Elements in list contain the suggested team
     to pick and the estimated probability of them winning in
     that week if current ELO ratings are used.
+
+Example
+-------
+season=2017
+current_week=9
+prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
+             'DEN', 'JAX', 'PIT']
 """
+season=2017
+current_week=9
+prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
+             'DEN', 'JAX', 'PIT']
 
 import numpy as np
 import pandas as pd
@@ -33,12 +47,11 @@ if __name__ == "__main__":
     print(pk.file_path)
     pk.pull_data()
     print('Current Teams')
-    df = pk.build_schedule(season=2017)
+    df = pk.build_schedule(season=season)
     teams = np.unique(np.concatenate(
         (df.team1, df.team2)
     ))
     print(teams)
-    pk.compare_picks(season=2017,
-                     current_week=9,
-                     prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
-                                  'DEN', 'JAX', 'PIT'])
+    pk.compare_picks(season=season,
+                     current_week=current_week,
+                     prior_picks=prior_picks)

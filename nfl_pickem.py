@@ -2,7 +2,7 @@
 
    Author: Adam J. Vogt
    Project Origin Date: 09/07/2018
-   Modified Date: 08/20/2019
+   Modified Date: 08/24/2019
 
    package for selecting optimal sequence of NFL team picks
    in a survivor pool
@@ -90,12 +90,12 @@ class Pickem(object):
         if self.data_ is None:
             return print('No game schedule data, please try pull_data() method')
         else:
-            team_schedule = self.data_
+            team_schedule = self.data_.copy()
 
         # Sort on season
         team_schedule = team_schedule[team_schedule.season == season]
 
-        team_schedule['result2'] = 1 - team_schedule.result1 
+        team_schedule['result2'] = 1 - team_schedule.result1.values
         for col in ['result1', 'result2']:
             team_schedule.loc[team_schedule[col] < 0.9, col] = 0
             team_schedule.loc[:, col] = team_schedule[col].astype('int64')
