@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from nfl_pickem import Pickem
 
