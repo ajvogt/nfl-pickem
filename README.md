@@ -7,15 +7,17 @@ An explanation of the model can be
 [here](https://fivethirtyeight.com/methodology/how-our-nfl-predictions-work/).
 
 ## To-Do
-- [ ] Analyze prediction accuracy for future games
-- [ ] Build API structure
+- [x] Build API structure
   - [x] initialize by pulling data and creating table <br/>
   have file name/location be an attribute.
-  - [ ] have method for calculating outcomes <br/>
+  - [x] have method for calculating outcomes <br/>
   have attributes for prior picks, number of weeks to cover and
   and how many possible picks each week (or probability threshold)
   to consider
+- [x] create script to compare forecasts of picks
 - [ ] Run analysis on historical outcomes for picking structure
+- [ ] Analyze prediction accuracy for future games
+
 
 
 ## Notes on Future Predictability
