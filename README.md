@@ -92,7 +92,7 @@ versus future ones can be left to the player.
   and how many possible picks each week (or probability threshold)
   to consider
 - [x] create script to compare forecasts of picks
-- [ ] Run analysis on historical outcomes for picking structure
+- [x] Run analysis on historical outcomes for picking structure
 - [ ] Analyze prediction accuracy for future games
 
 <a name="quickstart"></a>
