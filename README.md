@@ -158,7 +158,7 @@ When using a different maximum number of forecasting weeks for the optimization
 slight trend in towards lower expected elimination week and total number of 
 picks correct over the season.  
 
-Here, the last decade (seasons 2007-2017) are 
+Here, the last two decades (seasons 1997-2017) are 
 used to validate the optimization by running varying forecast distances and 
 comparing with actual outcomes of the picks. Elimination week is determined by 
 the week of the second incorrect pick, and total correct is the number of 
@@ -174,9 +174,9 @@ final week, the forecasting is limited to the number of weeks remaining in the
 season (e.g. only considering the additional 2 picks for the last 3 weeks of 
 the season).
 
-![alt text](results/expected_correct_picks.png)
-
 ![alt text](results/expected_elimination_week.png)
+
+![alt text](results/expected_correct_picks.png)
 
 Ultimately, there is a lot of season to season variation without a significant 
 signal towards choice of forecast size. While the trend points towards smaller 
