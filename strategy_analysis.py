@@ -32,7 +32,7 @@ def run_season(season):
     tmp = pk.build_schedule(season=season)
     reg_season_len = tmp[tmp.playoff < 0.9].week.max()
     results = []
-    for max_week in range(0, 3):
+    for max_week in range(0, reg_season_len):
         ind_start = time.time()
         picks = run_strategy(pk,
                              max_week=max_week,
@@ -59,12 +59,12 @@ def run_season(season):
 
 if __name__ == '__main__':
     p = Pool(4)
-    results = p.map(run_season, [2014, 2015, 2016, 2017])
+    results = p.map(run_season, range(1997, 2018))
     for i in range(len(results)):
         results[i] = pd.DataFrame(results[i])
         results[i].columns = ['season', 'max_week', 'correct', 
                               'possible', 'elim_week']
     
-    df = pd.concat([i for i in results]).reset_index()
+    df = pd.concat([i for i in results])
     df.to_csv('results/strategy_analysis.csv', index=False)
-    print(df)
+    print('Final Records: %i'%df.shape[0])
