@@ -5,6 +5,8 @@ The goal of this project is to make an optimal selection of
 sequential picks of which NFL team will win their particular 
 matchup each week.  
 
+A [quickstart](#quickstart) guide can be found here.
+
 ## Context: Survivor Pool
 In a survivor pool game, each player must 
 select one NFL team each week that the player thinks 
@@ -85,6 +87,12 @@ versus future ones can be left to the player.
 - [x] create script to compare forecasts of picks
 - [ ] Run analysis on historical outcomes for picking structure
 - [ ] Analyze prediction accuracy for future games
+
+<a name="quickstart"></a>
+
+## Quick Start Guide
+
+
 
 ## Discussion & Ideas
 
