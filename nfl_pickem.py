@@ -190,7 +190,7 @@ class Pickem(object):
                       max_week=17,
                       prior_picks=[]):
         ts = self.build_schedule(season=season,
-                            elo_week=current_week)
+                                 elo_week=current_week)
         ts = ts[~ts.team1.isin(prior_picks)].reset_index()
         
         max_week = min(ts.week.max(), max_week)
