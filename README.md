@@ -94,14 +94,21 @@ versus future ones can be left to the player.
 <a name="quickstart"></a>
 
 ## Quick Start Guide
-1. Clone/download a copy of this repository
+Be sure to have 
+[Python 3](https://www.python.org/download/releases/3.0/) 
+installed on your machine.  For some 
+of these instructions it is useful to have a bash terminal. 
+For Windows users, 
+[Git Bash](https://gitforwindows.org/) 
+is a great option.
+1. Clone/download a copy of this repository.
 
 ```console
 $ git clone git@github.com:ajvogt/nfl-pickem.git
 ```
 
 2. For the folder containing the repo, 
-install requirements 
+install requirements. 
    * Use the first two commands 
 if you want to protect your local environment, or skip if you are 
 unconcerned.  Use `venv/bin/activate` for mac.
