@@ -174,9 +174,9 @@ final week, the forecasting is limited to the number of weeks remaining in the
 season (e.g. only considering the additional 2 picks for the last 3 weeks of 
 the season).
 
-![alt text](result/expected_correct_picks.png)
+![alt text](results/expected_correct_picks.png)
 
-![alt text](result/expected_elimination_week.png)
+![alt text](results/expected_elimination_week.png)
 
 Ultimately, there is a lot of season to season variation without a significant 
 signal towards choice of forecast size. While the trend points towards smaller 
