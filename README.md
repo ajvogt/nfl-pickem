@@ -46,7 +46,9 @@ win thier particular matchup in a given week, and
 2. an objective to maximize that will increase chances of 
 survival in the pool.
 
-For the first point, we use FiveThrityEight's ELO ratings model 
+For the first point, we use 
+[FiveThrityEight's ELO Ratings](https://projects.fivethirtyeight.com/2018-nfl-predictions/) 
+model 
 for NFL game predictions. 
 The ELO ratings are combined with home field 
 status to estimate the liklihood that a team will win their 
