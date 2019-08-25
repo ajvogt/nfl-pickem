@@ -182,7 +182,7 @@ class Pickem(object):
             if v.varValue > 0:
                 ind.append(int(v.name.split('_')[1]))
 
-        return ind
+        return np.sort(ind)
     
     def compare_picks(self,
                       season=2017,
