@@ -5,7 +5,8 @@ The goal of this project is to make an optimal selection of
 sequential picks of which NFL team will win their particular 
 matchup each week.  
 
-A [quickstart](#quickstart) guide can be found here.
+A [quickstart](#quickstart) guide can be found here. The 
+[To-Do List](#todo) can be found here.
 
 ## Context: Survivor Pool
 In a survivor pool game, each player must 
@@ -76,6 +77,8 @@ liklihood of success, optimal sequences of any length can
 be calculated and the risks of trading present liklihoods 
 versus future ones can be left to the player.
 
+<a name="todo"></a>
+
 ## To-Do
 - [x] Build API structure
   - [x] initialize by pulling data and creating table <br/>
@@ -91,7 +94,11 @@ versus future ones can be left to the player.
 <a name="quickstart"></a>
 
 ## Quick Start Guide
+1. clone/copy this repository
 
+```
+$ git clone git@github.com:ajvogt/nfl-pickem.git
+```
 
 
 ## Discussion & Ideas
