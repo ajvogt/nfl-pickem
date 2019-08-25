@@ -5,7 +5,7 @@ The goal of this project is to make an optimal selection of
 sequential picks of which NFL team will win their particular 
 matchup each week.  
 
-A [quickstart](#quickstart) guide can be found here. The 
+A [Quick Start Guide](#quickstart) can be found here. The 
 [To-Do List](#todo) can be found here.
 
 ## Context: Survivor Pool
@@ -94,12 +94,50 @@ versus future ones can be left to the player.
 <a name="quickstart"></a>
 
 ## Quick Start Guide
-1. clone/copy this repository
+1. Clone/download a copy of this repository
 
-```
+```console
 $ git clone git@github.com:ajvogt/nfl-pickem.git
 ```
 
+2. For the folder containing the repo, 
+install requirements 
+   * Use the first two commands 
+if you want to protect your local environment, or skip if you are 
+unconcerned.  Use `venv/bin/activate` for mac.
+
+```console
+$ virtualenv venv
+$ source venv/Scripts/activate
+$ pip3 install -r requirements.txt
+```
+
+3. Make sure you have the latest copy of the 
+[FiveThirtyEight ELO Ratings](https://github.com/fivethirtyeight/nfl-elo-game/blob/master/data/nfl_games.csv)
+and matchups .csv file in the `/data` folder.
+
+   * For incomplete seasons, you will need to fill out the 
+   matchup information for the season and at least one ELO 
+   rating per team in the week of their earliest appearance. 
+   For best results, ensure an updated ELO rating at each week.
+
+4. Change the parameters in the `make_picks.py` script and 
+save.
+
+```python
+season=2017
+current_week=9
+prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
+             'DEN', 'JAX', 'PIT']
+```
+
+5. Run the script.
+
+```console
+$ python make_picks.py
+```
+
+6. Profit
 
 ## Discussion & Ideas
 
