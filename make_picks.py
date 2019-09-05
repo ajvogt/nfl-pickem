@@ -33,10 +33,9 @@ current_week=9
 prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
              'DEN', 'JAX', 'PIT']
 """
-season=2017
-current_week=9
-prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
-             'DEN', 'JAX', 'PIT']
+season=2019
+current_week=1
+prior_picks=[]
 
 import numpy as np
 import pandas as pd
@@ -45,11 +44,17 @@ from nfl_pickem import Pickem
 if __name__ == "__main__":
     pk = Pickem()
     print(pk.file_path)
+    pk.file_path = '../nfl-pickem/data/nfl_elo.csv'
     pk.pull_data()
     print('Current Teams')
+    pk.data_ = pk.data_.rename(
+        columns={'elo1_pre': 'elo1',
+                 'elo2_pre': 'elo2'}
+    )
     df = pk.build_schedule(season=season)
     teams = np.unique(np.concatenate(
-        (df.team1, df.team2)
+        (df[df.team1.notnull()].team1, 
+         df[df.team2.notnull()].team2)
     ))
     print(teams)
     pk.compare_picks(season=season,

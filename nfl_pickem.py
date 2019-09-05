@@ -95,6 +95,11 @@ class Pickem(object):
         # Sort on season
         team_schedule = team_schedule[team_schedule.season == season]
 
+        if 'result1' not in team_schedule.columns:
+            team_schedule['result1'] = 0
+            cond_win = team_schedule.score1 > team_schedule.score2
+            team_schedule.loc[cond_win, 'result1'] = 1
+    
         team_schedule['result2'] = 1 - team_schedule.result1.values
         for col in ['result1', 'result2']:
             team_schedule.loc[team_schedule[col] < 0.9, col] = 0
@@ -122,7 +127,7 @@ class Pickem(object):
         # calculating probabilities based on elo week
         for i in [1, 2]:
             team_schedule['elo%i_week'%i] = np.nan
-            for team in team_schedule['team%i'%i].unique():
+            for team in team_schedule[team_schedule['team%i'%i].notnull()]['team%i'%i].unique():
                 cond = team_schedule['team%i'%i] == team
                 if elo_week == 1:
                     elo = team_schedule[cond]['elo%i'%i].values[0]
