@@ -47,10 +47,10 @@ if __name__ == "__main__":
     pk.file_path = '../nfl-pickem/data/nfl_elo.csv'
     pk.pull_data()
     print('Current Teams')
-    pk.data_ = pk.data_.rename(
-        columns={'elo1_pre': 'elo1',
-                 'elo2_pre': 'elo2'}
-    )
+    # pk.data_ = pk.data_.rename(
+    #     columns={'elo1_pre': 'elo1',
+    #              'elo2_pre': 'elo2'}
+    # )
     df = pk.build_schedule(season=season)
     teams = np.unique(np.concatenate(
         (df[df.team1.notnull()].team1, 
