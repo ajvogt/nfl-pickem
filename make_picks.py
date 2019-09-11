@@ -35,7 +35,7 @@ prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
 """
 season=2019
 current_week=2
-prior_picks=['DAL']
+prior_picks=['SEA']
 
 import numpy as np
 import pandas as pd
