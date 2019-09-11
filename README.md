@@ -90,8 +90,9 @@ versus future ones can be left to the player.
   and how many possible picks each week (or probability threshold)
   to consider
 - [x] create script to compare forecasts of picks
-- [ ] Run analysis on historical outcomes for picking structure
+- [x] Run analysis on historical outcomes for picking structure
 - [ ] Analyze prediction accuracy for future games
+- [ ] Incorporate FiveThirtyEight's new Quarterback adjustment model
 
 <a name="quickstart"></a>
 
@@ -102,7 +103,13 @@ installed on your machine.  For some
 of these instructions it is useful to have a bash terminal. 
 For Windows users, 
 [Git Bash](https://gitforwindows.org/) 
-is a great option.
+is a great option. 
+
+**Note** that the `qb_elo_model` 
+parameter of the `build_schedule()` method is still 
+not functional.  Only the basic elo model can be 
+used for now.
+
 1. Clone/download a copy of this repository.
 
 ```console
