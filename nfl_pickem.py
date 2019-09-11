@@ -59,17 +59,7 @@ class Pickem(object):
     def _calculate_probabilities(self, df):
         # neutral
         df['win_prob'] = \
-            1 / (np.power(10, -1*(df.elo1_week - df.elo2_week)/400) + 1)
-        
-        # team1 away
-        cond = (df.neutral < 0.5)&(df.home < 0.5)
-        df.loc[cond, 'win_prob'] = \
-            1 / (np.power(10, -1*(df[cond].elo1_week - df[cond].elo2_week - 65)/400) + 1)
-        
-        # team1 home
-        cond = (df.neutral < 0.5)&(df.home > 0.5)
-        df.loc[cond, 'win_prob'] = \
-            1 / (np.power(10, -1*(df[cond].elo1_week + 65 - df[cond].elo2_week)/400) + 1)
+            1 / (np.power(10, -1*(df.elo1_week - df.elo2_week + df.elo_adj)/400) + 1)
         
         return df
 
@@ -85,7 +75,8 @@ class Pickem(object):
 
     def build_schedule(self, 
                        season=2017,
-                       elo_week=1):
+                       elo_week=1,
+                       qb_elo_model=False):
         
         if self.data_ is None:
             return print('No game schedule data, please try pull_data() method')
@@ -95,6 +86,11 @@ class Pickem(object):
         # Sort on season
         team_schedule = team_schedule[team_schedule.season == season]
 
+        if 'result1' not in team_schedule.columns:
+            team_schedule['result1'] = 0
+            cond_win = team_schedule.score1 > team_schedule.score2
+            team_schedule.loc[cond_win, 'result1'] = 1
+    
         team_schedule['result2'] = 1 - team_schedule.result1.values
         for col in ['result1', 'result2']:
             team_schedule.loc[team_schedule[col] < 0.9, col] = 0
@@ -106,23 +102,47 @@ class Pickem(object):
         tmp2 = team_schedule.copy()
         tmp2['home'] = 0
         tmp2.loc[:, 'elo_prob1'] = 1 - tmp2['elo_prob1'].values
+        tmp2.loc[:, 'qbelo_prob1'] = 1 - tmp2['qbelo_prob1'].values
         del tmp2['result1']
         tmp2 = tmp2.rename(columns={
             'team1': 'team2',
             'team2': 'team1',
-            'elo1': 'elo2',
-            'elo2': 'elo1',
+            'elo1_pre': 'elo2_pre',
+            'elo2_pre': 'elo1_pre',
+            'qbelo1_pre': 'qbelo2_pre',
+            'qbelo2_pre': 'qbelo1_pre',
+            'qb1_adj': 'qb2_adj',
+            'qb2_adj': 'qb1_adj',
             'score1': 'score2',
             'score2': 'score1',
             'result2': 'result1' 
         })
         team_schedule = pd.concat([tmp1, tmp2], sort=False)
         team_schedule = team_schedule.sort_values(by='date')
+        
+        # choosing elo model and finding elo home/away adjustment
+        if qb_elo_model:
+            for i in [1, 2]:
+                team_schedule['elo%i'%i] = team_schedule['qbelo%i_pre'%i].values + \
+                                           team_schedule['qb%i_adj'%i].values
+            team_schedule['elo_adj'] = \
+                -400*np.log10(1/team_schedule.qbelo_prob1.values - 1) - \
+                (team_schedule['qbelo1_pre'].values - \
+                 team_schedule['qbelo2_pre'].values + \
+                 team_schedule['qb1_adj'].values - \
+                 team_schedule['qb2_adj'].values)
+        else:
+            for i in [1, 2]:
+                team_schedule['elo%i'%i] = team_schedule['elo%i_pre'%i].values
+            team_schedule['elo_adj'] = \
+                -400*np.log10(1/team_schedule.elo_prob1.values - 1) - \
+                (team_schedule['elo1_pre'].values - \
+                 team_schedule['elo2_pre'].values)
 
         # calculating probabilities based on elo week
         for i in [1, 2]:
             team_schedule['elo%i_week'%i] = np.nan
-            for team in team_schedule['team%i'%i].unique():
+            for team in team_schedule[team_schedule['team%i'%i].notnull()]['team%i'%i].unique():
                 cond = team_schedule['team%i'%i] == team
                 if elo_week == 1:
                     elo = team_schedule[cond]['elo%i'%i].values[0]
