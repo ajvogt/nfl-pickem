@@ -1,5 +1,5 @@
 @echo off
-ECHO Installing packages...
+ECHO running pickem script...
 
 ECHO activating virtual environment
 call venv\Scripts\activate
@@ -8,3 +8,4 @@ call venv\Scripts\activate
 python make_picks.py
 
 PAUSE
+git
