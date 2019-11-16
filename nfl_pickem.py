@@ -10,6 +10,7 @@
 
 import time
 import datetime
+import requests
 
 import pandas as pd
 import numpy as np
@@ -23,6 +24,7 @@ class Pickem(object):
     def __init__(self,
                  file_path='../nfl-pickem/data/nfl_games.csv'):
         self.file_path = file_path
+        self.data_url = 'https://projects.fivethirtyeight.com/nfl-api/nfl_elo.csv'
         self.team_schedule_ = None
         self.data_ = None
     
@@ -63,7 +65,13 @@ class Pickem(object):
         
         return df
 
-    def pull_data(self):
+    def pull_data(self, auto_update=True):
+
+        if auto_update:
+            print('Pulling latest data from: %s'%self.data_url)
+            new_file = requests.get(self.data_url)
+            print('Saving latest data at: %s'%self.file_path)
+            open(self.file_path, 'wb').write(new_file.content)
 
         ts = pd.read_csv(self.file_path)
         ts = self._calculate_week(ts)
