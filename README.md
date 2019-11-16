@@ -103,7 +103,19 @@ installed on your machine.  For some
 of these instructions it is useful to have a bash terminal. 
 For Windows users, 
 [Git Bash](https://gitforwindows.org/) 
-is a great option. 
+is a great option.  To ensure python is installed correctly, 
+open a terminal (or command line terminal in windows), and
+enter
+```console
+$ python
+```
+if a python kernel does not open, then it is 
+incorrectly installed.  If you are a windows user, and you trust
+that I am not malicious, you can double click the `install.bat` 
+shell script to auto install and skip the steps below.  Similarly,
+you can also use the `run_make_picks.bat` file to automatically
+run the python script.  Just be sure to update the parameters in 
+step \#4 below.
 
 **Note** that the `qb_elo_model` 
 parameter of the `build_schedule()` method is still 
