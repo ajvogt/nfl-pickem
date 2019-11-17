@@ -37,6 +37,8 @@ season=2019
 current_week=10
 prior_picks=['SEA', 'BAL', 'DAL', 'LAR', 'PHI', 'NE',
              'GB', 'NO', 'BUF']
+auto_update = True # will automatically pull the latest data from FiveThirtyEight
+visualize_results = False # will produce a plot of the different forecasting selections
 
 import numpy as np
 import pandas as pd
@@ -44,20 +46,16 @@ from nfl_pickem import Pickem
 
 if __name__ == "__main__":
     pk = Pickem()
-    print(pk.file_path)
-    pk.file_path = '../nfl-pickem/data/nfl_elo.csv'
-    pk.pull_data()
-    print('Current Teams')
-    # pk.data_ = pk.data_.rename(
-    #     columns={'elo1_pre': 'elo1',
-    #              'elo2_pre': 'elo2'}
-    # )
+    pk.pull_data(auto_update=auto_update)
     df = pk.build_schedule(season=season)
     teams = np.unique(np.concatenate(
         (df[df.team1.notnull()].team1, 
          df[df.team2.notnull()].team2)
     ))
-    print(teams)
+    print('Teams previously chosen: %s'%prior_picks)
+    print('Teams available to choose from: %s'
+          %[x for x in teams if x not in prior_picks])
     pk.compare_picks(season=season,
                      current_week=current_week,
-                     prior_picks=prior_picks)
+                     prior_picks=prior_picks,
+                     visualize_results=visualize_results)
