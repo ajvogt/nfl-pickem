@@ -38,6 +38,7 @@ current_week=10
 prior_picks=['SEA', 'BAL', 'DAL', 'LAR', 'PHI', 'NE',
              'GB', 'NO', 'BUF']
 auto_update = True # will automatically pull the latest data from FiveThirtyEight
+visualize_results = False # will produce a plot of the different forecasting selections
 
 import numpy as np
 import pandas as pd
@@ -56,4 +57,5 @@ if __name__ == "__main__":
           %[x for x in teams if x not in prior_picks])
     pk.compare_picks(season=season,
                      current_week=current_week,
-                     prior_picks=prior_picks)
+                     prior_picks=prior_picks,
+                     visualize_results=visualize_results)

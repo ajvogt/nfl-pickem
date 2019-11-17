@@ -20,6 +20,8 @@ plt.style.use('fivethirtyeight')
 
 import pulp as pl
 
+from utils.plot import plot_results
+
 class Pickem(object):
     def __init__(self,
                  file_path='../nfl-pickem/data/nfl_elo.csv'):
@@ -216,9 +218,11 @@ class Pickem(object):
                       season=2017,
                       current_week=1,
                       max_week=17,
-                      prior_picks=[]):
+                      prior_picks=[],
+                      visualize_results=False):
         ts = self.build_schedule(season=season,
                                  elo_week=current_week)
+        results = self._make_pivot_table(ts)
         ts = ts[~ts.team1.isin(prior_picks)].reset_index()
         
         max_week = min(ts.week.max(), max_week)
@@ -241,3 +245,63 @@ class Pickem(object):
         print('Team_WinProbability')
         for pick in picks:
             print(pick)
+        
+        if visualize_results:
+            self._viz_results(ts, results, max_week=max_week, 
+                              prior_picks=prior_picks)
+
+    def _make_pivot_table(self, df):
+        df = df[df.team1.notnull()&df.team2.notnull()]
+        results = pd.DataFrame(
+            np.arange(0, np.unique(np.concatenate((df.team1, df.team2))).shape[0])
+        )
+        results.columns = ['index']
+        for week in df.week.unique():
+            tmp = df[df.week == week].copy()
+            tmp = tmp.sort_values(by='win_prob', ascending=False).reset_index()[['team1', 'win_prob']]
+            tmp.loc[:, 'team1'] = tmp.apply(lambda x: '%s: %.3f'%(x.team1, x.win_prob), axis=1)
+            results = results.join(tmp[['team1']], how='left', rsuffix='_week%s'%week)
+            results = results.rename(columns={'team1': 'week%s'%week})
+        del results['index']
+        return results
+
+    def _viz_results(self,
+                     ts,
+                     results,
+                     max_week=17,
+                     prior_picks=[]):        
+        max_week = min(ts.week.max(), max_week)
+        picks = []
+        for week in range(max_week, 
+                          ts.week.min()-1, 
+                          -1):
+            ind = self.pick_optimization(
+                ts[ts.week <= week]
+            )
+            picks.append(
+                list(
+                    ts.loc[ind, 'team1'].values
+                )
+            )
+        
+        results_array = results.values        
+        results_map = np.zeros(results.shape)
+        picks.reverse()
+        for pick in picks:
+            for i in range(len(pick)):
+                cond = results[results.columns[i]].str.contains(pick[i])&\
+                       results[results.columns[i]].notnull()
+                if i < (len(pick) - 1):
+                    if results_map[results.loc[cond, :].index[0], i] == 0:
+                        results_map[results.loc[cond, :].index[0], i] = i
+                else:
+                    results_map[results.loc[cond, :].index[0], i] = 1
+
+        for i in range(results.columns.shape[0]):
+            for pick in prior_picks:
+                cond = results[results.columns[i]].notnull()&\
+                       results[results.columns[i]].str.contains(pick)
+                if cond.sum() > 0:
+                    results_map[results.loc[cond, :].index[0], i] = -1  
+       
+        plot_results(results, results_map)

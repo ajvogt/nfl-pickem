@@ -157,6 +157,8 @@ season=2017
 current_week=9
 prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
              'DEN', 'JAX', 'PIT']
+auto_update = True # pull data from FiveThirtyEight
+visualize_results = False # beta version
 ```
 
 5. Run the script.
