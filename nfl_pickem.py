@@ -20,6 +20,8 @@ plt.style.use('fivethirtyeight')
 
 import pulp as pl
 
+from utils.plot import plot_results
+
 class Pickem(object):
     def __init__(self,
                  file_path='../nfl-pickem/data/nfl_elo.csv'):
@@ -284,7 +286,7 @@ class Pickem(object):
         results_array = results.values
         
         print('Team_WinProbability')
-        fig, ax = plt.subplots(figsize=(15, 7.5))
+        
         results_map = np.zeros(results.shape)
         picks.reverse()
         for pick in picks:
@@ -300,23 +302,12 @@ class Pickem(object):
                 else:
                     results_map[results.loc[cond, :].index[0], i] = 1
 
-
-        print(np.unique(results_map))
-        cmaps = ['Greens', 'Blues', 'Oranges', 
-                 'Greys', 'Reds', 'PuRd']
-        cax = ax.matshow(results_map, 
-                         cmap='tab20b', aspect=0.15, alpha=0.5,
-                         label='Forecast %i weeks'%int(i))
-        ax.set_xticklabels(['']+list(results.columns))
-        ax.set_yticklabels([])
-        ax.grid(False)
-        fig.colorbar(cax)
-        for i in range(results.shape[0]):
-            for j in range(results.shape[1]):
-                ax.text(x=j, y=i,
-                        s=results.iloc[i, j],
-                        va='center', ha='center',
-                        fontsize=9)
-        ax.legend(bbox_to_anchor=(1.1, 1.05))
-        plt.show()
+        for i in range(results.columns.shape[0]):
+            for pick in prior_picks:
+                cond = results[results.columns[i]].notnull()&\
+                       results[results.columns[i]].str.contains(pick)
+                if cond.sum() > 0:
+                    results_map[results.loc[cond, :].index[0], i] = -1  
+       
+        plot_results(results, results_map)
         import pdb; pdb.set_trace()
