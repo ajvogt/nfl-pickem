@@ -218,9 +218,11 @@ class Pickem(object):
                       season=2017,
                       current_week=1,
                       max_week=17,
-                      prior_picks=[]):
+                      prior_picks=[],
+                      visualize_results=False):
         ts = self.build_schedule(season=season,
                                  elo_week=current_week)
+        results = self._make_pivot_table(ts)
         ts = ts[~ts.team1.isin(prior_picks)].reset_index()
         
         max_week = min(ts.week.max(), max_week)
@@ -243,6 +245,10 @@ class Pickem(object):
         print('Team_WinProbability')
         for pick in picks:
             print(pick)
+        
+        if visualize_results:
+            self._viz_results(ts, results, max_week=max_week, 
+                              prior_picks=prior_picks)
 
     def _make_pivot_table(self, df):
         df = df[df.team1.notnull()&df.team2.notnull()]
@@ -259,16 +265,11 @@ class Pickem(object):
         del results['index']
         return results
 
-    def compare_picks_new(self,
-                      season=2017,
-                      current_week=1,
-                      max_week=17,
-                      prior_picks=[]):
-        ts = self.build_schedule(season=season,
-                                 elo_week=current_week)
-        results = self._make_pivot_table(ts)
-        ts = ts[~ts.team1.isin(prior_picks)].reset_index()
-        
+    def _viz_results(self,
+                     ts,
+                     results,
+                     max_week=17,
+                     prior_picks=[]):        
         max_week = min(ts.week.max(), max_week)
         picks = []
         for week in range(max_week, 
@@ -283,19 +284,13 @@ class Pickem(object):
                 )
             )
         
-        results_array = results.values
-        
-        print('Team_WinProbability')
-        
+        results_array = results.values        
         results_map = np.zeros(results.shape)
         picks.reverse()
         for pick in picks:
-            print(pick)
             for i in range(len(pick)):
                 cond = results[results.columns[i]].str.contains(pick[i])&\
                        results[results.columns[i]].notnull()
-                # results.loc[cond, results.columns[i]] = \
-                #     results.loc[cond, results.columns[i]] + '_X'
                 if i < (len(pick) - 1):
                     if results_map[results.loc[cond, :].index[0], i] == 0:
                         results_map[results.loc[cond, :].index[0], i] = i
@@ -310,4 +305,3 @@ class Pickem(object):
                     results_map[results.loc[cond, :].index[0], i] = -1  
        
         plot_results(results, results_map)
-        import pdb; pdb.set_trace()

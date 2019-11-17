@@ -22,9 +22,10 @@ def plot_results(results, results_map):
     my_cm = ListedColormap(colors)
 
     # plotting table results
-    fig, ax = plt.subplots(figsize=(15, 7.5))
+    fig, ax = plt.subplots(figsize=(15*results.columns.shape[0]/8, 7.5))
     cax = ax.matshow(results_map, 
                      cmap=my_cm, aspect=0.15, alpha=0.5)
+    ax.set_xticks(np.arange(-1, results.columns.shape[0]))
     ax.set_xticklabels(['']+list(results.columns))
     ax.set_yticklabels([])
     ax.grid(False)
@@ -37,7 +38,7 @@ def plot_results(results, results_map):
             ax.text(x=j, y=i,
                             s=results.iloc[i, j],
                             va='center', ha='center',
-                            fontsize=9)
+                            fontsize=9/(results.columns.shape[0]/9))
     plt.show()
 
 if __name__ == "__main__":
