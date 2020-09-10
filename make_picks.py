@@ -33,10 +33,9 @@ current_week=9
 prior_picks=['NE', 'NO', 'SEA', 'BAL', 'LAR',
              'DEN', 'JAX', 'PIT']
 """
-season=2019
-current_week=10
-prior_picks=['SEA', 'BAL', 'DAL', 'LAR', 'PHI', 'NE',
-             'GB', 'NO', 'BUF']
+season=2020
+current_week=1
+prior_picks=[]
 auto_update = True # will automatically pull the latest data from FiveThirtyEight
 visualize_results = False # will produce a plot of the different forecasting selections
 
